@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BiblioController!{% endblock %}
+
+{% block body %}
+    {% for r in rayons %}
+        {% if r.libRayon == rayon %}
+            <div class="rounded" style="margin: 10px; background-color: Chocolate ">
+                <h2 class="text-white" style="margin-left: 47%">{{ r.libRayon | upper }}</h2>
+            </div>
+            {% for cats in r.categories %}
+                {% if(cats.libCatg == categorie or categorie == null) %}
+                    <div class="rounded" style="margin: 10px; background-color: SlateGray ">
+                        <h3 class="text-white" style="margin-left: 47%">{{ cats.libCatg }}</h3>
+                    </div>
+                    {% for livre in cats.livres %}
+                        <p class=" m-2 rounded row" style="background-color: LightSteelBlue">
+                            <span class="col">{{ livre.titre }}</span>
+                            <span class="col">{{ livre.dateParution | format_datetime('short', 'none', locale="fr") }}</span>
+                            <button class="col" style="padding: 0%">Edit</button>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+

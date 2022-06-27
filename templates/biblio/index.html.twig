@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BiblioController!{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+    {% for rayon in rayons %}
+        <div class="rounded" style="margin: 10px; background-color: Chocolate ">
+            <h2 style="margin-left: 47%"><a class="text-white" href="/biblio/{{ rayon.libRayon }}">{{ rayon.libRayon | upper}}</a></h2>
+        </div>
+        {% for cats in rayon.categories %}
+            <div class="rounded" style="margin: 10px; background-color: SlateGray ">
+                <h3 style="margin-left: 47%"><a class="text-white" href="/biblio/{{ rayon.libRayon }}/{{ cats.libCatg }}">{{ cats.libCatg }}</a></h3>
+            </div>
+            {% for livre in cats.livres %}
+                <p id="{{ livre.id }}" class=" m-2 rounded row" style="background-color: LightSteelBlue">
+                    <span id="tspan{{ livre.id }}" class="col">{{ livre.titre }}</span>
+                    <span id="dspan{{ livre.id }}"class="col">{{ livre.dateParution | date('Y-m-d') }}</span>
+                    {%  for auteur in livre.auteur %}
+                        <span id="apspan{{ livre.id }}" class="col" data-id_auteur="{{ auteur.id }}" data-auteurp="{{ auteur.prenom }}"> {{ auteur.prenom }}</span>
+                        <span id="anspan{{ livre.id }}" class="col" data-auteurn="{{ auteur.nom }}"> {{ auteur.nom }} </span>
+                    {%  endfor %}
+                    <button id="Edit{{ livre.id }}" class="col" style="padding: 0%" data-id_livre="{{ livre.id }}" data-titre="{{ livre.titre }}">Edit</button>
+                </p>
+            {% endfor %}
+            {% endfor %}
+    {% endfor %}
+
+{% endblock %}
+
